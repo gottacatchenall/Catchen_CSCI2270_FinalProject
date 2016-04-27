@@ -23,6 +23,7 @@ class OuterTable
 		void printAlphabetical();
 		void resetTable();
 		void checkCollisions();
+		HashElem* addToAlphabeticalLinkedList(HashElem *head, HashElem *newVal);
 	private:
 		int outerHashValue(std::string x, int s);
 		int outerTableSize;

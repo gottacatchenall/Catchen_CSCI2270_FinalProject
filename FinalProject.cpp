@@ -135,7 +135,7 @@ int main(int argc, char*argv[]){
 			hash.printTableContents();
 		}
 		else if(resp == 6){
-			//hash.printAlphabetical();
+			hash.printAlphabetical();
 		}
 		else if(resp == 7){
 			// Call method on outer hash table to reset all data

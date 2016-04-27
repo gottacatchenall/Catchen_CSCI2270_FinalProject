@@ -37,9 +37,11 @@ class InnerTable
 		HashElem *findInnerMovie(std::string name);
 		void deleteInnerMovie(std::string name);
 		void printInnerContents();
-		HashElem* alphabetizeInner(HashElem *head);
+		TableElem* alphabetizeInner(int j);
 		void resetInnerTable();
+		void resetNextPointers();
 		int checkInnerCollisions();
+		int getInnerTableSize();
 	private:
 		int innerHashValue(std::string x, int s);
 		int innerTableSize;

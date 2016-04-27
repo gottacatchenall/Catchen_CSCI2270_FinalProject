@@ -93,21 +93,27 @@ void InnerTable::printInnerContents(){
 	}	
 }
 
-// This doesn't work yet
-HashElem* InnerTable::alphabetizeInner(HashElem *head){
-	for(int i = 0; i < innerTableSize; i++){
-		if(!inside[i].list.empty()){
-			for(int j = 0; j < inside[i].list.size(); j++){
-				if(head == NULL){
-					head = inside[i].list[j];
-					head->next = NULL;
-				}
-				//else if()
+// Returns TableElem at given index
+TableElem* InnerTable::alphabetizeInner(int j){
+	return &inside[j];
+}
 
+// Resets next pointers of each element in tree
+void InnerTable::resetNextPointers(){
+	for(int i = 0; i < innerTableSize; i++){
+		// If vector at index is not empty...
+		if(!inside[i].list.empty()){
+			// Iterate through vector and reset pointer
+			for(int j = 0; j < inside[i].list.size(); j++){
+				inside[i].list[j]->next = NULL;
 			}
 		}
-	}
-	return head;	
+	}	
+}
+
+// Returns size of inner table
+int InnerTable::getInnerTableSize(){
+	return innerTableSize;
 }
 
 // Iterates through inner table and clears the vector at every index

@@ -74,19 +74,70 @@ void OuterTable::printTableContents(){
 	}
 }
 
+// Iterates through each element in tree and stores them alphebetically in a linked
+// list, then prints 
 void OuterTable::printAlphabetical(){
 	HashElem* head = NULL;
 
+	// Iterate through entire outer tree
 	for(int i = 0; i < outerTableSize; i++){
-		head = outside[i].alphabetizeInner(head);
+		// Iterate through entire inner tree
+		for(int j = 0; j < outside[i].getInnerTableSize(); j++){
+			// Get table elem at each index of inner table
+			TableElem *temp = outside[i].alphabetizeInner(j);
+			// Iterate through vector at each index in inner table and add to alphabetical list
+			for(int k = 0; k < temp->list.size(); k++){
+				// send to function to be added to linked list
+				head = addToAlphabeticalLinkedList(head, temp->list[k]);
+			}
+		}
 	}
-
+	
+	// Iterate through alphabetical list and print contents
 	HashElem *temp = head;
 	while(temp != NULL){
-		cout << temp->title << endl;
+		cout << temp->title << ":" << temp->year << endl;
 		temp = temp->next;
 	}
-	// dear god reset the pointers or you're screwed
+
+	// Resets next pointers so alphabetizing doesn't break when run again
+	for(int i = 0; i < outerTableSize; i++){
+		outside[i].resetNextPointers();
+	}	
+}
+
+// Adds one HashElem to the linked list in alphabetical order, and returns head of linked list
+HashElem* OuterTable::addToAlphabeticalLinkedList(HashElem *head, HashElem *newVal){
+	// If head is null, set current item to head
+	if(head == NULL){
+		head = newVal;
+		head->next = NULL;
+	}
+	else{
+		// If newVal's title is after head 
+		if(newVal->title.compare(head->title) > 0){
+			HashElem *temp = head;
+			// Iterate through list until the newVals title is no longer after temp->next's title
+			while(temp->next != NULL){
+				if(newVal->title.compare(temp->next->title) < 0){
+					break;
+				}
+				else{
+					temp = temp->next;
+				}
+			}
+			// Add newVal to linked list
+			newVal->next = temp->next;
+			temp->next = newVal;
+		}
+		else{
+			// Make newVal the new head
+			newVal->next = head;
+			head = newVal;
+		}
+	}
+	// Returns head of linked list
+	return head;
 }
 
 
